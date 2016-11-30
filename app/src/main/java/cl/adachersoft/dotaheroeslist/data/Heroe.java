@@ -1,4 +1,4 @@
-package cl.adachersoft.dotaheroeslist;
+package cl.adachersoft.dotaheroeslist.data;
 
 /**
  * Created by cristian on 25-11-2016.

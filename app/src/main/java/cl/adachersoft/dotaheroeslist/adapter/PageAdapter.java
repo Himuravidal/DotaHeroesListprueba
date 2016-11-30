@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import cl.adachersoft.dotaheroeslist.FavoritesFragment;
-import cl.adachersoft.dotaheroeslist.HeroesFragment;
+import cl.adachersoft.dotaheroeslist.main.FavoritesFragment;
+import cl.adachersoft.dotaheroeslist.main.HeroesFragment;
 import cl.adachersoft.dotaheroeslist.R;
 
 /**
@@ -17,10 +17,6 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     private Context context;
 
-    public PageAdapter(FragmentManager fm) {
-        super(fm);
-
-    }
 
     public PageAdapter(FragmentManager fm, Context context) {
         super(fm);

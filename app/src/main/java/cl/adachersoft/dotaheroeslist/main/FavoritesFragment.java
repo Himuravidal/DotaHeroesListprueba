@@ -1,9 +1,10 @@
-package cl.adachersoft.dotaheroeslist;
+package cl.adachersoft.dotaheroeslist.main;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,9 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static android.R.attr.key;
-import static android.os.Build.VERSION_CODES.M;
-import static com.google.android.gms.internal.zzoe.ke;
+import cl.adachersoft.dotaheroeslist.R;
 
 
 public class FavoritesFragment extends Fragment {
@@ -42,21 +41,25 @@ public class FavoritesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.FavRv);
+        recycler.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setItemAnimator(new DefaultItemAnimator());
+
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("favorites").child(uid);
 
-     FirebaseRecyclerAdapter<String,FavHolder>adapter= new FirebaseRecyclerAdapter<String, FavHolder>(String.class,android.R.layout.simple_list_item_1, FavoritesFragment.FavHolder.class, reference) {
-         @Override
-         protected void populateViewHolder(FavHolder viewHolder, String model, int position) {
-             viewHolder.setView(model);
-         }
-     };
+        FirebaseRecyclerAdapter<String, FavHolder> adapter = new FirebaseRecyclerAdapter<String, FavHolder>(String.class, android.R.layout.simple_list_item_1, FavoritesFragment.FavHolder.class, reference) {
+            @Override
+            protected void populateViewHolder(FavHolder viewHolder, String model, int position) {
+                viewHolder.setView(model);
+            }
+        };
 
 
         recycler.setAdapter(adapter);
+
     }
 
 
@@ -65,7 +68,7 @@ public class FavoritesFragment extends Fragment {
 
         private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         private String uid = user.getUid();
-        private DatabaseReference reference =FirebaseDatabase.getInstance().getReference().child("favorites");
+        private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("favorites");
 
         public FavHolder(View itemView) {
             super(itemView);

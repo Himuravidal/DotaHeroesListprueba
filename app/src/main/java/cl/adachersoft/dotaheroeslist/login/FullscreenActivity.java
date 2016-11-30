@@ -1,28 +1,34 @@
-package cl.adachersoft.dotaheroeslist;
+package cl.adachersoft.dotaheroeslist.login;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
-import android.view.View;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 
-import static android.app.Activity.RESULT_OK;
+import cl.adachersoft.dotaheroeslist.main.MainActivity;
+import cl.adachersoft.dotaheroeslist.R;
+
 import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
-public class FullscreenActivity extends AppCompatActivity {
+public class FullscreenActivity extends AppCompatActivity implements LoginCallback{
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
-        //TODO validate user is signed in
-        singUp();
+        new LoginValidation(this).init();
+    }
+
+    @Override
+    public void loged() {
+
+        Toast.makeText(this, "LOGED", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
     }
 
     public void singUp() {
@@ -40,7 +46,7 @@ public class FullscreenActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            startActivity(new Intent(FullscreenActivity.this, MainActivity.class));
+            loged();
         }
     }
 

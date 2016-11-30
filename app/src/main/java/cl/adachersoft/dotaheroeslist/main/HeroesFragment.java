@@ -1,4 +1,4 @@
-package cl.adachersoft.dotaheroeslist;
+package cl.adachersoft.dotaheroeslist.main;
 
 
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import cl.adachersoft.dotaheroeslist.R;
+import cl.adachersoft.dotaheroeslist.data.Heroe;
 
 
 public class HeroesFragment extends Fragment {
@@ -39,21 +42,26 @@ public class HeroesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recycler = (RecyclerView) view.findViewById(R.id.mainRv);
+
+        final RecyclerView recycler = (RecyclerView) view.findViewById(R.id.mainRv);
+        recycler.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("heroes");
 
-        //TODO for favorites replace model heroe with String
+
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Heroe, HeroeHolder>(Heroe.class, android.R.layout.simple_list_item_1, HeroeHolder.class, reference) {
             @Override
             protected void populateViewHolder(HeroeHolder viewHolder, Heroe model, int position) {
                 viewHolder.setName(model.localized_name);
+
             }
         };
 
         recycler.setAdapter(adapter);
+
 
     }
 
@@ -75,12 +83,11 @@ public class HeroesFragment extends Fragment {
                     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     DatabaseReference favorites = FirebaseDatabase.getInstance().getReference().child("favorites").child(uid);
                     favorites.child(name).setValue(name);
-                    //TODO for favorites removeValue() https://firebase.google.com/docs/database/android/read-and-write
-                    //TODO refactor this to better scope variables
 
                 }
             });
 
         }
     }
+
 }

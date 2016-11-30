@@ -1,4 +1,4 @@
-package cl.adachersoft.dotaheroeslist;
+package cl.adachersoft.dotaheroeslist.main;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import cl.adachersoft.dotaheroeslist.R;
 import cl.adachersoft.dotaheroeslist.adapter.PageAdapter;
 
 public class MainActivity extends AppCompatActivity {
